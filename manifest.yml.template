@@ -2,7 +2,7 @@
 applications:
   - name: {your-name}-dataingestion
     buildpack: java_buildpack
-    path: target/dataingestion-service-2.0.13.jar
+    path: target/dataingestion-service-2.0.20.jar
     memory: 500MB
     services:
       - {uaaService}

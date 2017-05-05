@@ -91,7 +91,7 @@ public class TimeSeriesDataIngestionHandler extends BaseFactory
             this.wsServerClient.init(this.restClient, nullHeaders , listener);
 
             WebSocketAdapter nullListener = null;
-            this.timeSeriesClient.createConnectionToTimeseriesWebsocket(nullListener);
+            this.timeSeriesClient.createTimeseriesWebsocketConnectionPool(nullListener);
             log.info("*******************TimeSeriesDataIngestionHandler Initialization complete*********************");
         }
         catch (Throwable e)
@@ -175,14 +175,14 @@ public class TimeSeriesDataIngestionHandler extends BaseFactory
         dpIngestion.setMessageId(String.valueOf(System.currentTimeMillis()));
 
         Body body = new Body();
-        body.setName(assetTag.getSourceTagId());
+        body.setName(assetTag.getTimeseriesDatasource().getTag());
 
         // attributes
         com.ge.predix.entity.util.map.Map map = new com.ge.predix.entity.util.map.Map();
         map.put("assetId", asset.getAssetId());
-        if ( !StringUtils.isEmpty(assetTag.getSourceTagId()) )
+        if ( !StringUtils.isEmpty(assetTag.getTimeseriesDatasource().getTag()) )
         {
-            String sourceTagAttribute = assetTag.getSourceTagId().split(":")[1];
+            String sourceTagAttribute = assetTag.getTimeseriesDatasource().getTag().split(":")[1];
             map.put("sourceTagId", sourceTagAttribute);
         }
         body.setAttributes(map);
@@ -190,7 +190,7 @@ public class TimeSeriesDataIngestionHandler extends BaseFactory
         // datapoints
         List<Object> datapoint1 = new ArrayList<Object>();
         datapoint1.add(converLocalTimeToUtcTime(json.getTimestamp().getTime()));
-        Double convertedValue = getConvertedValue(assetTag.getTagDatasource().getNodeName(),
+        Double convertedValue = getConvertedValue(assetTag.getEdgeDatasource().getNodeName(),
                 Double.parseDouble(json.getValue().toString()));
         datapoint1.add(convertedValue);
 
@@ -238,13 +238,13 @@ public class TimeSeriesDataIngestionHandler extends BaseFactory
                 {
                     Body body = new Body();
                     AssetTag assetTag = getAssetTag(asset.getAssetTag(), nodeName);
-                    body.setName(assetTag.getSourceTagId());
+                    body.setName(assetTag.getTimeseriesDatasource().getTag());
                     // attributes
                     com.ge.predix.entity.util.map.Map map = new com.ge.predix.entity.util.map.Map();
                     map.put("assetId", asset.getAssetId());
-                    if ( !StringUtils.isEmpty(assetTag.getSourceTagId()) )
+                    if ( !StringUtils.isEmpty(assetTag.getTimeseriesDatasource().getTag()) )
                     {
-                        String sourceTagAttribute = assetTag.getSourceTagId().split(":")[1];
+                        String sourceTagAttribute = assetTag.getTimeseriesDatasource().getTag().split(":")[1];
                         map.put("sourceTagId", sourceTagAttribute);
                     }
                     body.setAttributes(map);
@@ -252,7 +252,7 @@ public class TimeSeriesDataIngestionHandler extends BaseFactory
                     // datapoints
                     List<Object> datapoint1 = new ArrayList<Object>();
                     datapoint1.add(converLocalTimeToUtcTime(data.getTimestamp().getTime()));
-                    Double convertedValue = getConvertedValue(assetTag.getTagDatasource().getNodeName(),
+                    Double convertedValue = getConvertedValue(assetTag.getEdgeDatasource().getNodeName(),
                             Double.parseDouble(data.getValue().toString()));
                     datapoint1.add(convertedValue);
 
@@ -333,8 +333,8 @@ public class TimeSeriesDataIngestionHandler extends BaseFactory
             {
                 AssetTag assetTag = entry.getValue();
                 // TagDatasource dataSource = assetTag.getTagDatasource();
-                if ( assetTag != null && !assetTag.getSourceTagId().isEmpty() && nodeName != null
-                        && nodeName.toLowerCase().contains(assetTag.getSourceTagId().toLowerCase()) )
+                if ( assetTag != null && !assetTag.getTimeseriesDatasource().getTag().isEmpty() && nodeName != null
+                        && nodeName.toLowerCase().contains(assetTag.getTimeseriesDatasource().getTag().toLowerCase()) )
                 {
                     ret = assetTag;
                     return ret;

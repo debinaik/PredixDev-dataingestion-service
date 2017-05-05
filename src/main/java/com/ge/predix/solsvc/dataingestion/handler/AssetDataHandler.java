@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 
 import com.ge.predix.entity.asset.Asset;
 import com.ge.predix.entity.asset.AssetTag;
-import com.ge.predix.entity.asset.TagDatasource;
+import com.ge.predix.entity.datasource.EdgeDatasource;
 import com.ge.predix.solsvc.bootstrap.ams.factories.AssetFactory;
 
 /**
@@ -32,7 +32,8 @@ public class AssetDataHandler extends BaseFactory {
 	 * @return -
 	 */
 	public List<Asset> getAllAssets() {
-		List<Header> headers = this.restClient.getOauthHttpHeaders();
+		List<Header> headers = this.restClient.getSecureTokenForClientId();
+		this.restClient.addZoneToHeaders(headers, this.assetConfig.getZoneId());
 		List<Asset> assets = this.assetFactory.getAllAssets(headers);
 		/*
 		 * if (assets != null) { for (Asset asset:assets) {
@@ -104,7 +105,7 @@ public class AssetDataHandler extends BaseFactory {
 			if (tags != null) {
 				for (Entry<String, AssetTag> entry : tags.entrySet()) {
 					AssetTag assetTag = entry.getValue();
-					TagDatasource dataSource = assetTag.getTagDatasource();
+					EdgeDatasource dataSource = assetTag.getEdgeDatasource();
 					if (dataSource != null && !dataSource.getNodeName().isEmpty()
 							&& dataSource.getNodeName().equals(nodeName)) {
 						ret.put(entry.getKey(), assetTag);

@@ -16,7 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ge.predix.entity.asset.Asset;
 import com.ge.predix.entity.asset.AssetTag;
-import com.ge.predix.entity.asset.TagDatasource;
+import com.ge.predix.entity.datasource.TimeseriesDatasource;
 import com.ge.predix.solsvc.dataingestion.api.DataIngestionServiceAPI;
 import com.ge.predix.solsvc.dataingestion.handler.DataIngestionHandler;
 
@@ -145,10 +145,10 @@ public class DataIngestionServiceController
             for (Entry<String, AssetTag> entry : tags.entrySet())
             {
                 AssetTag assetTag = entry.getValue();
-                TagDatasource dataSource = assetTag.getTagDatasource();
-                if ( dataSource != null && !dataSource.getNodeName().isEmpty() )
+                TimeseriesDatasource dataSource = assetTag.getTimeseriesDatasource();
+                if ( dataSource != null && !dataSource.getTag().isEmpty() )
                 {
-                    return assetTag.getSourceTagId();
+                    return dataSource.getTag();
                 }
             }
         }

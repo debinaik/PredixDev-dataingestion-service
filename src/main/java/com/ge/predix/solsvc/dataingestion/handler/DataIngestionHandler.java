@@ -89,7 +89,7 @@ public class DataIngestionHandler
     @SuppressWarnings("nls")
     public String retrieveAsset()
     {
-        Asset asset = this.assetDataHandler.retrieveAsset(null, "machineControllerId", "/asset/Bently.Nevada.3500.Rack1",
+        Asset asset = this.assetDataHandler.retrieveAsset(null, "attributes.machineControllerId.value", "/asset/Bently.Nevada.3500.Rack1",
                 null);
         ObjectMapper mapper = new ObjectMapper();
         StringWriter writer = new StringWriter();
