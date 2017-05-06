@@ -1,3 +1,8 @@
+
+#Deprecated - this repo is deprecated see [Data-Exchange](https://github.com/PredixDev/data-exchange)
+
+
+
 <a href="http://predixdev.github.io/dataingestion-service/javadocs/index.html" target="_blank" >
 	<img height="50px" width="100px" src="images/javadoc.png" alt="view javadoc"></a>
 &nbsp;
