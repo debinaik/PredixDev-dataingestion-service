@@ -1,5 +1,5 @@
 
-#Deprecated - this repo is deprecated see [Data-Exchange](https://github.com/PredixDev/data-exchange)
+# Deprecated - this repo is deprecated see [Data-Exchange](https://github.com/PredixDev/data-exchange)
 
 
 
@@ -9,17 +9,18 @@
 <a href="http://predixdev.github.io/dataingestion-service" target="_blank">
 	<img height="50px" width="100px" src="images/pages.jpg" alt="view github pages">
 </a>
-##Predix Data Ingestion Service
+
+## Predix Data Ingestion Service
 
 Welcome to the Predix Data Ingestion Service.  This service is focused on receiving a request to store Timeseries Data and sending it to the Timeseries service.  It is part of the Data Ingestion Pipeline where a lookup is performed for an AssetId, accessing metadata about each Timeseries Tag.  The metadata will hold the required info needed to post the data to the Predix Timeseries database.
 
-###Ingestion Flow
+### Ingestion Flow
 Data Flows from the MachineDataSimulator or a physical Asset via Predix Machine to the HTTP-DataRiverReceiver in the cloud.  The Timeseries Ingester takes over from there, looks up the Asset Tag meta-info which provides the info needed to post the data to the Predix Timeseries service.
 
 
 <img src='images/RefApp-IngestionFlow.png' >
 
-##Asset Model
+## Asset Model
 This service is part of the Predix Reference App.  Since Predix Asset comes with an empty database, the Reference App creates a data 'model' depicted below, which sets up entities and attributes for Groups, Classifications, Assets and Tags.
 
 <img src=images/AssetModel.png width=1200 height=600>
@@ -42,13 +43,13 @@ Timeseries Tag ID
 - (future)A Field has a FieldStrategy Handler uri that knows how to retrieve or store data from/to a FieldSource
 - (future)A MachineAsset is be modeled to navigate from the Machine Id to the Devices and Assets
 
-##Tech Stack
+## Tech Stack
 - Spring
 - SpringBoot
 - SpringTest
 - Maven
 
-##Microcomponents
+## Microcomponents
 - [AssetBootstrap](https://github.com/PredixDev/asset-bootstrap)
 - [TimeseriesBootstrap](https://github.com/predixdev/timeseries-bootstrap)
 - [PredixMicroserviceTemplates](https://github.com/predixdev/predix-microservice-templates)
